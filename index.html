@@ -1,39 +1,56 @@
+
+# Create an index.html file that loads index.json and displays it in a table
+html_content = """
 <!DOCTYPE html>
-<html lang="en">
+<html lang=\"en\">
 <head>
-  <meta charset="UTF-8">
-  <title>GMP Document Index</title>
+    <meta charset=\"UTF-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <title>GMP Document Index</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
 </head>
 <body>
-  <h1>GMP Document Index</h1>
-  <table id="docTable" border="1">
-    <thead>
-      <tr>
-        <th>File Name</th>
-        <th>Link</th>
-        <th>Category</th>
-        <th>Last Updated</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <h1>GMP Document Index</h1>
+    <table id=\"docTable\">
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th>Link</th>
+                <th>Category</th>
+                <th>Last Updated</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 
-  <script>
-    fetch('https://vapidsea.github.io/files/index.json')
-      .then(response => response.json())
-      .then(data => {
-        const tbody = document.querySelector('#docTable tbody');
-        data.forEach(doc => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${doc["File Name"]}</td>
-            <td>${doc[Open</a></td>
-            <td>${doc["Category"]}</td>
-            <td>${doc["Last Updated"]}</td>
-          `;
-          tbody.appendChild(tr);
-        });
-      });
-  </script>
+    <script>
+        fetch('https://vapidsea.github.io/index.json')
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.querySelector('#docTable tbody');
+                data.forEach(doc => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${doc["File Name"]}</td>
+                        <td><a href="${doc["Link"]}" target="_blank">Open</a></td>
+                        <td>${doc["Category"]}</td>
+                        <td>${doc["Last Updated"]}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            });
+    </script>
 </body>
 </html>
+"""
+
+# Save the HTML content to a file
+with open("index.html", "w") as f:
+    f.write(html_content)
+
+print("index.html file created successfully.")
